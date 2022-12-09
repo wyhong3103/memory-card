@@ -1,0 +1,19 @@
+.card{
+    height : 7rem;
+    width : 7rem;
+    transition : all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card h3{
+    font-size : 4rem;
+    font-family: var(--font1);
+}
+
+.card:hover{
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
