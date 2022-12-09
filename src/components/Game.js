@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
-const Game = () => {
-    
+const Game = (props) => {
 };
 
 export default Game;
