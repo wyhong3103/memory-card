@@ -10,7 +10,7 @@ const Game = (props) => {
                             <Card 
                                 key={index} 
                                 number={item[0]} 
-                                callback={item[1] === 1 ? props.lose : props.win}
+                                callback={item[1] === true ? props.lose : props.win}
                             ></Card>
                         )
                     }
