@@ -1,17 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Game from "./components/Game";
 import Header from "./components/Header";
 import Scoreboard from "./components/Scoreboard";
 import shuffle from "./util";
 
 const App = () => {
-    const [current, setCurrent] = useState(0);
+    const [curScore, setCurScore] = useState(0);
     const [best, setBest] = useState(0);
-    const [currentCards, setCurrentCards] = useState([[1,0], [2,0]]);
-
-    // A set to store all selected numbers
-    const used = new Set();
-    let currentSize = 2;
+    const [curCards, setCurCards] = useState([[1,0], [2,0]]);
+    const [curSize, setCurSize] = useState(2);
+    const [used, setUsed] = useState(new Set());
     
     // Function to generate the next batch of memory cards
     const generate = () => {
@@ -19,8 +17,8 @@ const App = () => {
         // temp stores pairs of [number , isUsed]
         const temp = [];
 
-        while (temp.length < currentSize){
-            const random = Math.floor(Math.random() * (currentSize * 2)) + 1;
+        while (temp.length < curSize){
+            const random = Math.floor(Math.random() * (curSize * (1.5))) + 1;
             if (!selected.has(random)){
                 selected.add(random);
                 temp.push([random, 0]);
@@ -38,8 +36,8 @@ const App = () => {
 
         if (count === temp.length){
             temp.pop()
-            while (temp.length < currentSize){
-                const random = Math.floor(Math.random() * (currentSize * 2)) + 1;
+            while (temp.length < curSize){
+                const random = Math.floor(Math.random() * (curSize * 2)) + 1;
                 if (!selected.has(random) && !used.has(random)){
                     temp.push([random, 0]);
                 }
@@ -49,45 +47,52 @@ const App = () => {
         return temp;
     }
 
-    const win = () => {
-        let curScore = 0;
-        setCurrent(prev => {
-            curScore = prev;
-            return prev+1;
+    useEffect(
+        () => {
+            setBest(prev => Math.max(curScore, prev));
+            setCurSize(prev => (curScore >= prev ? prev * 2 : prev));
+            const newCards = generate();
+            shuffle(newCards);
+            setCurCards(newCards);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [curScore])
+
+    useEffect(
+        () => {
+            const newCards = generate();
+            shuffle(newCards);
+            setCurCards(newCards);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [curSize])
+
+    const win = (winningNumber) => {
+        setUsed(prev => {
+            const temp = new Set(prev);
+            temp.add(winningNumber);
+            return temp;
         });
-
-        if (curScore > best){
-            setBest(curScore);
-        }
-
-        if (curScore >= currentSize){
-            currentSize *= 2;
-        }
-
-        const newCards = generate();
-        shuffle(newCards);
-        setCurrentCards(newCards);
+        setCurScore(prevCur => {
+            return prevCur+1;
+        });
     }
 
     const lose = () => {
-        setCurrent(0);
-        currentSize = 2;
-        used.clear();
-
-        const newCards = [1,2];
-        shuffle(newCards);
-        setCurrentCards(newCards);
+        setUsed(new Set());
+        setCurScore(0);
+        setCurSize(2);
     }
 
     return(
         <div>
             <Header></Header>
             <Scoreboard 
-                current={current} 
+                current={curScore} 
                 best={best}
             ></Scoreboard>
             <Game 
-                cards={currentCards} 
+                cards={curCards} 
                 win={win} 
                 lose={lose}
             ></Game>
