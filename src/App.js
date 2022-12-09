@@ -7,7 +7,7 @@ import shuffle from "./util";
 const App = () => {
     const [current, setCurrent] = useState(0);
     const [best, setBest] = useState(0);
-    const [currentCards, setCurrentCards] = useState([1, 2]);
+    const [currentCards, setCurrentCards] = useState([[1,0], [2,0]]);
 
     // A set to store all selected numbers
     const used = new Set();
