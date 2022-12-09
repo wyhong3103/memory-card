@@ -45,7 +45,7 @@ const App = () => {
             }
         }
 
-        setCurrentCards(temp);
+        return temp;
     }
 
     const win = () => {
@@ -63,7 +63,8 @@ const App = () => {
             currentSize *= 2;
         }
 
-        //reset function
+        const newCards = generate();
+        setCurrentCards(newCards);
     }
 
     const lose = () => {
@@ -71,7 +72,8 @@ const App = () => {
         currentSize = 2;
         used.clear();
 
-        //reset function
+        const newCards = [1,2];
+        setCurrentCards(newCards);
     }
 
     return(
