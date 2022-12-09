@@ -2,6 +2,7 @@ import { useState } from "react";
 import Game from "./components/Game";
 import Header from "./components/Header";
 import Scoreboard from "./components/Scoreboard";
+import shuffle from "./util";
 
 const App = () => {
     const [current, setCurrent] = useState(0);
@@ -64,6 +65,7 @@ const App = () => {
         }
 
         const newCards = generate();
+        shuffle(newCards);
         setCurrentCards(newCards);
     }
 
@@ -73,14 +75,22 @@ const App = () => {
         used.clear();
 
         const newCards = [1,2];
+        shuffle(newCards);
         setCurrentCards(newCards);
     }
 
     return(
         <div>
             <Header></Header>
-            <Scoreboard current={current} best={best}></Scoreboard>
-            <Game cards={currentCards}></Game>
+            <Scoreboard 
+                current={current} 
+                best={best}
+            ></Scoreboard>
+            <Game 
+                cards={currentCards} 
+                win={win} 
+                lose={lose}
+            ></Game>
         </div>
     )
 };
