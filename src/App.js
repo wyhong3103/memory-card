@@ -3,6 +3,7 @@ import Game from "./components/Game";
 import Header from "./components/Header";
 import Scoreboard from "./components/Scoreboard";
 import shuffle from "./util";
+import './styles/App.css'
 
 const App = () => {
     const [curScore, setCurScore] = useState(0);
@@ -26,7 +27,6 @@ const App = () => {
         }
 
         // Counting how many used element in the array
-        // Make sure at least one non used
         // Label it if used
         let count = 0;
         for (const i of temp){
@@ -34,6 +34,7 @@ const App = () => {
             count += i[1];
         }
 
+        // Make sure at least one non used
         if (count === temp.length){
             temp.pop()
             while (temp.length < curSize){
@@ -87,17 +88,19 @@ const App = () => {
     }
 
     return(
-        <div>
-            <Header></Header>
-            <Scoreboard 
-                current={curScore} 
-                best={best}
-            ></Scoreboard>
-            <Game 
-                cards={curCards} 
-                win={win} 
-                lose={lose}
-            ></Game>
+        <div className="main-container">
+            <div>
+                <Header></Header>
+                <Scoreboard
+                    current={curScore}
+                    best={best}
+                ></Scoreboard>
+                <Game
+                    cards={curCards}
+                    win={win}
+                    lose={lose}
+                ></Game>
+            </div>
         </div>
     )
 };
