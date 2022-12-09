@@ -47,6 +47,7 @@ const App = () => {
         return temp;
     }
 
+    // Make sure only run certain functions after curScore has updated
     useEffect(
         () => {
             setBest(prev => Math.max(curScore, prev));
@@ -58,6 +59,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     , [curScore])
 
+    // Make sure only run certain functions after curSize has updated
     useEffect(
         () => {
             const newCards = generate();
