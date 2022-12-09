@@ -1,4 +1,5 @@
 import Card from "./Card";
+import '../styles/Game.css';
 
 const Game = (props) => {
     return(

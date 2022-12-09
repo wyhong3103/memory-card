@@ -1,3 +1,5 @@
+import '../styles/Scoreboard.css'
+
 const Scoreboard = (props) => {
     return(
         <div className="scoreboard">
