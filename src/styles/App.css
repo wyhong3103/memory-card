@@ -12,10 +12,22 @@ html {
 }
 
 .main-container{
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
-    align-items: center;
+}
+
+.blur-container{
+    height : 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.blur-bg{
+    position: absolute;
+    height : 100%;
+    width: 100%;
+    backdrop-filter: blur(5px);
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Game from "./components/Game";
 import Header from "./components/Header";
 import Scoreboard from "./components/Scoreboard";
+import PopUp from "./components/PopUp";
 import shuffle from "./util";
 import './styles/App.css'
 
@@ -11,6 +12,8 @@ const App = () => {
     const [curCards, setCurCards] = useState([[1,0], [2,0]]);
     const [curSize, setCurSize] = useState(2);
     const [used, setUsed] = useState(new Set());
+    const [popUp, setPopUp] = useState(true);
+    const [popUpMsg, setPopUpMsg] = useState("Welcome to 2xemory! You can only select card that has not been selected in the previous round! Score as high as possible!");
     
     // Function to generate the next batch of memory cards
     const generate = () => {
@@ -85,10 +88,28 @@ const App = () => {
         setUsed(new Set());
         setCurScore(0);
         setCurSize(2);
+        setPopUpMsg("Oh no, you lost! Try harder!");
+        togglePopUp();
+    }
+
+    const togglePopUp = () => {
+        setPopUp(prev => !prev);
     }
 
     return(
         <div className="main-container">
+            {
+                popUp === true ? 
+                (() => {
+                    return(
+                        <div className="blur-container">
+                            <div className="blur-bg"></div>
+                            <PopUp msg={popUpMsg} toggle={togglePopUp}></PopUp>
+                        </div>
+                    )
+                })() : 
+                null
+            }
             <div>
                 <Header></Header>
                 <Scoreboard
