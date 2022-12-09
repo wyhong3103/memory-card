@@ -73,6 +73,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     , [curSize])
 
+    // Series of function triggered when user presses an unselected card
     const win = (winningNumber) => {
         setUsed(prev => {
             const temp = new Set(prev);
@@ -84,6 +85,7 @@ const App = () => {
         });
     }
 
+    // Series of function triggered when user presses a selected card
     const lose = () => {
         setUsed(new Set());
         setCurScore(0);
@@ -92,6 +94,7 @@ const App = () => {
         togglePopUp();
     }
 
+    // Function that toggle pop up
     const togglePopUp = () => {
         setPopUp(prev => !prev);
     }
