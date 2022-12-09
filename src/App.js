@@ -6,11 +6,47 @@ import Scoreboard from "./components/Scoreboard";
 const App = () => {
     const [current, setCurrent] = useState(0);
     const [best, setBest] = useState(0);
-    const [currentSize, setCurrentSize] = useState(2);
     const [currentCards, setCurrentCards] = useState([1, 2]);
 
     // A set to store all selected numbers
     const used = new Set();
+    let currentSize = 2;
+    
+    // Function to generate the next batch of memory cards
+    const generate = () => {
+        const selected = new Set();
+        // temp stores pairs of [number , isUsed]
+        const temp = [];
+
+        while (temp.length < currentSize){
+            const random = Math.floor(Math.random() * (currentSize * 2)) + 1;
+            if (!selected.has(random)){
+                selected.add(random);
+                temp.push([random, 0]);
+            }
+        }
+
+        // Counting how many used element in the array
+        // Make sure at least one non used
+        // Label it if used
+        let count = 0;
+        for (const i of temp){
+            i[1] = used.has(i[0]);
+            count += i[1];
+        }
+
+        if (count === temp.length){
+            temp.pop()
+            while (temp.length < currentSize){
+                const random = Math.floor(Math.random() * (currentSize * 2)) + 1;
+                if (!selected.has(random) && !used.has(random)){
+                    temp.push([random, 0]);
+                }
+            }
+        }
+
+        setCurrentCards(temp);
+    }
 
     const win = () => {
         let curScore = 0;
@@ -24,7 +60,7 @@ const App = () => {
         }
 
         if (curScore >= currentSize){
-            setCurrentSize(prev => prev * 2);
+            currentSize *= 2;
         }
 
         //reset function
@@ -32,7 +68,7 @@ const App = () => {
 
     const lose = () => {
         setCurrent(0);
-        setCurrentSize(2);
+        currentSize = 2;
         used.clear();
 
         //reset function
