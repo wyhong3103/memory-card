@@ -6,3 +6,7 @@ This is a memory card game where you have memorise your previous selecton to gai
 
 - Organization of my code (splitting componenet/ styling files/ refactoring code etc etc)
 - Using react hooks (useEffect and useState)! I am still not that familiar with react hooks, but I did learn somethinig from this project!
+
+# Live Demo
+
+[Here!](https://wyhong3103.github.io/memory-card/)
